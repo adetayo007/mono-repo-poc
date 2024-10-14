@@ -1,99 +1,156 @@
+import { Metadata } from "next";
 import Image from "next/image";
-import { Button } from "@repo/ui/button";
-import styles from "./page.module.css";
+import { PlusCircledIcon } from "@radix-ui/react-icons";
 
-export default function Home() {
+import { AlbumArtwork } from "./components/album-artwork";
+import { Menu } from "./components/menu";
+import { PodcastEmptyPlaceholder } from "./components/podcast-empty-placeholder";
+import { Sidebar } from "./components/sidebar";
+import { listenNowAlbums, madeForYouAlbums } from "./data/albums";
+import { playlists } from "./data/playlists";
+import { Button } from "@repo/ui/components/ui/button";
+import { ScrollArea, ScrollBar } from "@repo/ui/components/ui/scroll-area";
+import { Separator } from "@repo/ui/components/ui/separator";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@repo/ui/components/ui/tabs";
+
+export const metadata: Metadata = {
+  title: "Music App",
+  description: "Example music app using the components.",
+};
+
+export default function MusicPage() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
+    <>
+      <div className="md:hidden">
         <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+          src="/examples/music-light.png"
+          width={1280}
+          height={1114}
+          alt="Music"
+          className="block dark:hidden"
         />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.tsx</code>
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+        <Image
+          src="/examples/music-dark.png"
+          width={1280}
+          height={1114}
+          alt="Music"
+          className="hidden dark:block"
+        />
+      </div>
+      <div className="">
+        <Menu />
+        <div className="border-t">
+          <div className="bg-background">
+            <div className="grid lg:grid-cols-5">
+              <Sidebar playlists={playlists} className="hidden lg:block" />
+              <div className="col-span-3 lg:col-span-4 lg:border-l">
+                <div className="h-full px-4 py-6 lg:px-8">
+                  <Tabs defaultValue="music" className="h-full space-y-6">
+                    <div className="space-between flex items-center">
+                      <TabsList>
+                        <TabsTrigger value="music" className="relative">
+                          Music
+                        </TabsTrigger>
+                        <TabsTrigger value="podcasts">Podcasts</TabsTrigger>
+                        <TabsTrigger value="live" disabled>
+                          Live
+                        </TabsTrigger>
+                      </TabsList>
+                      <div className="ml-auto mr-4">
+                        <Button>
+                          <PlusCircledIcon className="mr-2 h-4 w-4" />
+                          Add music
+                        </Button>
+                      </div>
+                    </div>
+                    <TabsContent
+                      value="music"
+                      className="border-none p-0 outline-none"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-1">
+                          <h2 className="text-2xl font-semibold tracking-tight">
+                            Listen Now
+                          </h2>
+                          <p className="text-sm text-muted-foreground">
+                            Top picks for you. Updated daily.
+                          </p>
+                        </div>
+                      </div>
+                      <Separator className="my-4" />
+                      <div className="relative">
+                        <ScrollArea>
+                          <div className="flex space-x-4 pb-4">
+                            {listenNowAlbums.map((album) => (
+                              <AlbumArtwork
+                                key={album.name}
+                                album={album}
+                                className="w-[250px]"
+                                aspectRatio="portrait"
+                                width={250}
+                                height={330}
+                              />
+                            ))}
+                          </div>
+                          <ScrollBar orientation="horizontal" />
+                        </ScrollArea>
+                      </div>
+                      <div className="mt-6 space-y-1">
+                        <h2 className="text-2xl font-semibold tracking-tight">
+                          Made for You
+                        </h2>
+                        <p className="text-sm text-muted-foreground">
+                          Your personal playlists. Updated daily.
+                        </p>
+                      </div>
+                      <Separator className="my-4" />
+                      <div className="relative">
+                        <ScrollArea>
+                          <div className="flex space-x-4 pb-4">
+                            {madeForYouAlbums.map((album) => (
+                              <AlbumArtwork
+                                key={album.name}
+                                album={album}
+                                className="w-[150px]"
+                                aspectRatio="square"
+                                width={150}
+                                height={150}
+                              />
+                            ))}
+                          </div>
+                          <ScrollBar orientation="horizontal" />
+                        </ScrollArea>
+                      </div>
+                    </TabsContent>
+                    <TabsContent
+                      value="podcasts"
+                      className="h-full flex-col border-none p-0 data-[state=active]:flex"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-1">
+                          <h2 className="text-2xl font-semibold tracking-tight">
+                            New Episodes
+                          </h2>
+                          <p className="text-sm text-muted-foreground">
+                            Your favorite podcasts. Updated daily.
+                          </p>
+                        </div>
+                      </div>
+                      <Separator className="my-4" />
+                      <PodcastEmptyPlaceholder />
+                    </TabsContent>
+                  </Tabs>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <Button appName="web" className={styles.secondary}>
-          Open alert
-        </Button>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file-text.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+    </>
   );
 }

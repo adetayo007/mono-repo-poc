@@ -22,14 +22,14 @@ interface AlbumArtworkProps extends React.HTMLAttributes<HTMLDivElement> {
   height?: number;
 }
 
-export function AlbumArtwork({
+export const AlbumArtwork: React.FC<AlbumArtworkProps> = ({
   album,
   aspectRatio = "portrait",
   width,
   height,
   className,
   ...props
-}: Readonly<AlbumArtworkProps>) {
+}: Readonly<AlbumArtworkProps>) => {
   return (
     <div className={cn("space-y-3", className)} {...props}>
       <ContextMenu>
@@ -91,4 +91,4 @@ export function AlbumArtwork({
       </div>
     </div>
   );
-}
+};

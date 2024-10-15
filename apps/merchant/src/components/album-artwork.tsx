@@ -1,6 +1,4 @@
-import Image from "next/image";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
-
 import { Album } from "../data/albums";
 import { playlists } from "../data/playlists";
 import {
@@ -33,9 +31,9 @@ export function AlbumArtwork({
   return (
     <div className={cn("space-y-3", className)} {...props}>
       <ContextMenu>
-        <ContextMenuTrigger asChild>
+        <ContextMenuTrigger>
           <div className="overflow-hidden rounded-md">
-            <Image
+            <img
               src={album.cover}
               alt={album.name}
               width={width}

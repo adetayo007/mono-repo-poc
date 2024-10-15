@@ -1,14 +1,17 @@
 {
-  "name": "turborepo-shadcn-ui",
-  "version": "1.4.2",
+  "name": "mono-repo",
+  "version": "1.0.0",
   "private": true,
   "license": "MIT",
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "start": "turbo start",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "ui": "pnpm --filter @repo/ui ui"
+    "ui": "pnpm --filter @repo/ui ui",
+    "build:merchant": "npx turbo run build --filter=merchant",
+    "build:web": "npx turbo run build --filter=web"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",

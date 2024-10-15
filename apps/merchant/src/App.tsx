@@ -1,5 +1,4 @@
 import { PlusCircledIcon } from "@radix-ui/react-icons";
-import { Metadata } from "next";
 import { Button } from "@repo/ui/components/ui/button";
 import { ScrollArea, ScrollBar } from "@repo/ui/components/ui/scroll-area";
 import { Separator } from "@repo/ui/components/ui/separator";
@@ -16,12 +15,7 @@ import { Sidebar } from "./components/sidebar";
 import { listenNowAlbums, madeForYouAlbums } from "./data/albums";
 import { playlists } from "./data/playlists";
 
-export const metadata: Metadata = {
-  title: "Music App",
-  description: "Example music app using the components.",
-};
-
-function Page() {
+function App() {
   return (
     <div className="">
       <Menu />
@@ -135,4 +129,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default App;

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   description: "Example music app using the components.",
 };
 
-function Page() {
+const Page: React.FC = () => {
   return (
     <div className="">
       <Menu />
@@ -133,6 +133,6 @@ function Page() {
       </div>
     </div>
   );
-}
+};
 
 export default Page;

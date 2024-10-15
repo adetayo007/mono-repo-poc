@@ -6,13 +6,18 @@ WORKDIR /app
 
 # Install dependencies separately for caching
 COPY package.json pnpm-lock.yaml ./
-RUN npm install -g pnpm@8.9.0 && pnpm install --frozen-lockfile
+# Use the latest pnpm version to avoid lockfile compatibility issues
+RUN npm install -g pnpm@latest && pnpm install --frozen-lockfile
 
 # Copy all project files
 COPY . .
 
-# Build the apps and packages
-RUN pnpm turbo run build --filter=web
+# Install dependencies for web and merchant applications
+RUN pnpm --filter=web install
+RUN pnpm --filter=merchant install
+
+# Build the apps (web and merchant)
+RUN pnpm turbo run build --filter=web --filter=merchant
 
 # ------ Separate image stage for production
 

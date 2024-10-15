@@ -7,7 +7,10 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   playlists: Playlist[];
 }
 
-export function Sidebar({ className, playlists }: SidebarProps) {
+export const Sidebar: React.FC<SidebarProps> = ({
+  className,
+  playlists,
+}: SidebarProps) => {
   return (
     <div className={cn("pb-12", className)}>
       <div className="space-y-4 py-4">
@@ -200,4 +203,4 @@ export function Sidebar({ className, playlists }: SidebarProps) {
       </div>
     </div>
   );
-}
+};
